@@ -1,0 +1,60 @@
+﻿@using CFSM_WEB.Models;
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<THoaDon>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "DanhSachHD";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Danh sách hóa đơn</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ngày đặt</th>            
+            <th>Khách</th>
+            <th>Địa chỉ</th>
+            <th>Phương thức thanh toán</th>
+            <th>Nhân viên tạo hd</th>
+            <th>Thành tiền</th>
+            <th>Trạng thái hd</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            string cls = i % 2 == 0 ? "table-warning" : "table-danger";
+            i++;
+            <tr class="@cls">
+                <td>@Html.DisplayFor(modelItem => item.NgayLap)</td>
+                <td>@item.MaKhachHangNavigation.HoTen</td>
+                <td>@item.DiaChi</td>
+                <td>@item.CachThanhToan</td>
+                <td>@item.MaNhanVienNavigation.HoTen</td>                
+                <td>@Html.DisplayFor(modelItem => item.ThanhTien)</td>
+                <td>@item.TrangThaiHoaDon</td>
+                <td>
+                    <a asp-action="DanhMucChiTietHD" asp-area="Admin" asp-controller="HomeAdmin" asp-route-maHD="@item.MaHoaDon">Details</a>                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("DanhSachHD", new { page = page }), new
+
+            X.PagedList.Mvc.Core.PagedListRenderOptions()
+{
+    LiElementClasses = new List<String>
+    {"page-item"},
+
+    PageClasses = new List<String>
+    {"page-link"}
+
+})

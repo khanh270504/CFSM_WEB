@@ -1,0 +1,56 @@
+﻿@model CFSM_WEB.Models.TDoAn
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "SuaSanPham";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>SuaSanPham</h1>
+
+<h4>TDoAn</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="SuaSanPham" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            
+            <!-- MaDoAn Hidden Field -->
+            <input type="hidden" asp-for="MaDoAn" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="TenDoAn" class="control-label"></label>
+                <input asp-for="TenDoAn" class="form-control" />
+                <span asp-validation-for="TenDoAn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DonGia" class="control-label"></label>
+                <input asp-for="DonGia" class="form-control" />
+                <span asp-validation-for="DonGia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoTaDoAn" class="control-label"></label>
+                <input asp-for="MoTaDoAn" class="form-control" />
+                <span asp-validation-for="MoTaDoAn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnhDoAn" class="control-label"></label>
+                <input asp-for="AnhDoAn" class="form-control" />
+                <span asp-validation-for="AnhDoAn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaMenu" class="control-label"></label>
+                <select asp-for="MaMenu" class="form-control" asp-items="ViewBag.MaMenu"></select>
+                <span asp-validation-for="MaMenu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Blog";
+    Layout = "_LayoutIndexCaPhe";
+}
+
+@using CFSM_WEB.Models;
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<TBlog>
+
+<section class="home-slider owl-carousel">
+
+    <div class="slider-item" style="background-image: url(../LayoutIndexCaPhe/images/kongfuong2.jpg);" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row slider-text justify-content-center align-items-center">
+
+                <div class="col-md-7 col-sm-12 text-center ftco-animate">
+                    <h1 class="mb-3 mt-5 bread">BLOG</h1>
+                    <p><a asp-action="Index" asp-controller="Home" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Home</a> <a asp-action="Blog" asp-controller="Home" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Blog</a></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row d-flex">
+            @foreach(var blog in Model)
+            {
+                <div class="col-md-4 d-flex ftco-animate">
+                    <div class="blog-entry align-self-stretch">
+                        <a href="blog-single.html" class="block-20" style="background-image: url('@Url.Content("~/ImagesMenu/" + blog.AnhTieuDe)');">
+                        </a>
+                        <div class="text py-4 d-block">
+                            <div class="meta">
+                                <div><p >Sept 28, 2018</p></div>
+                                <div><p >@blog.TieuDeBlog</p></div>
+                                <div><p class="meta-chat"><span class="icon-chat"></span> 3</p></div>
+                            </div>
+                            <h3 class="heading mt-2"><p>Coffee Testing Day</p></h3>
+                            <p>@blog.NoiDungBlog</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            
+            
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <div class="block-27 d-flex justify-content-center">
+                    @Html.PagedListPager(Model, page => Url.Action("Blog", new { page = page }))
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

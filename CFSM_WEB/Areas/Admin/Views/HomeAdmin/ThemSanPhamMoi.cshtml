@@ -1,0 +1,55 @@
+﻿@model CFSM_WEB.Models.TDoAn
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "ThemSanPhamMoi";
+
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>ThemSanPhamMoi</h1>
+
+<h4>TDoAn</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="ThemSanPhamMoi" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="TenDoAn" class="control-label"></label>
+                <input asp-for="TenDoAn" class="form-control" />
+                <span asp-validation-for="TenDoAn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DonGia" class="control-label"></label>
+                <input asp-for="DonGia" class="form-control" />
+                <span asp-validation-for="DonGia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MoTaDoAn" class="control-label"></label>
+                <input asp-for="MoTaDoAn" class="form-control" />
+                <span asp-validation-for="MoTaDoAn" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="AnhFile" class="control-label">Ảnh sản phẩm</label>
+                <input type="file" name="AnhFile" class="form-control" />
+                <span asp-validation-for="AnhDoAn" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="MaMenu" class="control-label"></label>
+                <select asp-for="MaMenu" class="form-control" asp-items="ViewBag.MaMenu"></select>
+                <span asp-validation-for="MaMenu" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

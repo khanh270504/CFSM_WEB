@@ -1,0 +1,76 @@
+﻿@using CFSM_WEB.Models;
+@using X.PagedList.Mvc.Core;
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model X.PagedList.IPagedList<TKhachHang>
+
+@if (Model == null || !Model.Any())
+{
+    <p>Không có Khách hàng nào để hiển thị.</p>
+}
+else
+{
+    <h2>@(Model[0].TrangThai == 1 ? "Danh sách Khách hàng" : "Danh sách Khách hàng dừng hoạt động")</h2>    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã khách hàng</th>
+                <th>Họ tên khách hàng</th>
+                <th>Tên hiển thị</th>
+                <th>Email</th>
+                <th>Địa chỉ</th>
+                <th>Số điện thoại</th>
+                <th>Tên đăng nhập</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int i = 0;
+            }
+            @foreach (var item in Model)
+            {
+                string cls = i % 2 == 0 ? "table-warning" : "table-danger";
+                i++;
+                <tr class="@cls">
+                    <td>@item.MaKhachHang</td>
+                    <td>@item.HoTen</td>
+                    <td>@item.TenHienThi</td>
+                    <td>@item.Email</td>
+                    <td>@item.DiaChi</td>
+                    <td>@item.SoDienThoai</td>
+                    <td>@item.TenDangNhap</td>
+                    @{
+                        if (item.TrangThai == 1)
+                        {
+                            <td>Còn hoạt động</td>
+                        }
+                        else
+                        {
+                            <td>Dừng hoạt động</td>
+                        }
+                    }
+                    @{
+                        if (item.TrangThai == 1)
+                        {
+                            <td><a asp-action="DungHoatDongKhach" asp-route-maKhach="@item.MaKhachHang">Dừng hoạt động</a></td>
+                        }
+                        else
+                        {
+                            <td><a asp-action="MoHoatDongKhach" asp-route-maKhach="@item.MaKhachHang">Mở hoạt động</a></td>
+                        }
+                    }
+                </tr>
+            }
+
+        </tbody>
+    </table>
+
+    @Html.PagedListPager(Model, page => Url.Action(Model[0].TrangThai == 1 ? "DanhSachKhachHangOn" : "DanhSachKhachHangOff", new { page }), new
+        X.PagedList.Mvc.Core.PagedListRenderOptions()
+        {
+            LiElementClasses = new List<string> { "page-item" },
+            PageClasses = new List<string> { "page-link" }
+        })
+}

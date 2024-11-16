@@ -1,0 +1,130 @@
+﻿@model IEnumerable<CFSM_WEB.ViewModels.CartItem>
+@{
+    ViewData["Title"] = "CheckOut";
+	Layout = "~/Views/Shared/_LayoutIndexCaPhe.cshtml";
+}
+
+<section class="home-slider owl-carousel">
+
+	<div class="slider-item" style="background-image: url(../LayoutIndexCaPhe/images/kongfuong2.jpg);" data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row slider-text justify-content-center align-items-center">
+
+				<div class="col-md-7 col-sm-12 text-center ftco-animate">
+					<h1 class="mb-3 mt-5 bread">Cart</h1>
+					<p><a asp-action="Index" asp-controller="Home" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Home</a> <a asp-action="Menu" asp-controller="Home" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Menu</a></p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="ftco-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12 ftco-animate">
+                    <form asp-action="Checkout" asp-controller="Cart" class="billing-form ftco-bg-dark p-3 p-md-5">
+						<div class="col-md-12 col-lg-6 col-xl-7">
+							<div class="form-check my-3">
+								<input type="checkbox" name="GiongKhachHang" class="form-check-input" id="GiongKhachHang" value="false">
+								<label class="form-check-label" for="GiongKhachHang">Lấy thông tin khách hàng đã đăng ký ?</label>
+							</div>
+							<div class="form-item delivery-info">
+								<label class="form-label my-3">Người nhận hàng<sup>*</sup></label>
+								<input type="text" name="HoTen" class="form-control">
+							</div>
+							<div class="form-item delivery-info">
+								<label class="form-label my-3">Địa chỉ nhận hàng<sup>*</sup></label>
+								<input type="text" name="DiaChi" class="form-control" placeholder="Hà nội Việt Nam">
+							</div>
+							<div class="form-item delivery-info">
+								<label class="form-label my-3">Điện thoại<sup>*</sup></label>
+								<input type="text" name="DienThoai" class="form-control">
+							</div>
+							<div class="form-item mt-3">
+								<textarea name="GhiChu" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Ghi chú"></textarea>
+							</div>
+							
+						</div>
+				<div class="row mt-5 pt-3 d-flex">
+					<div class="col-md-6 d-flex">
+						<div class="cart-detail cart-total ftco-bg-dark p-3 p-md-4">
+							<h3 class="billing-heading mb-4">Tổng số tiền</h3>							
+							<p class="d-flex">
+								<span>Delivery</span>
+								<span>0</span>
+							</p>
+							<p class="d-flex">
+								<span>Discount</span>
+								<span>0</span>
+							</p>
+							<hr>
+							<p class="d-flex total-price">
+								<span>Total</span>
+										<span>@Model.Sum(p => p.ThanhTien)</span>
+							</p>
+						</div>
+					</div>
+					<div class="col-md-6">						
+						<button type="submit" class="btn border-secondary text-uppercase text-primary w-100 mt-2">Đặt hàng</button>
+                            <div id="paypal-button-container" class="form-item mt-3" style="max-width:1000px;"></div>
+			
+					</div>
+						
+				</div>
+				</form><!-- END -->
+			</div> <!-- .col-md-8 -->
+
+		</div>
+	</div>
+</section> <!-- .section -->
+@section Scripts {
+	<script src="https://www.paypal.com/sdk/js?client-id=AY9AuJt1yz5p7AwRnoJk6LjXTiQflOkmPF5u8OuzbIAljgD4RjV289VfwLgPmca3hsCRqN2G1zOL6rrZ"></script>
+	<script>
+		$(document).ready(function () {
+			$("#GiongKhachHang").change(function () {
+				if ($(this).prop("checked")) {
+					$(this).val(true);
+					$(".delivery-info").addClass("d-none");
+				} else {
+					$(this).val(false);
+					$(".delivery-info").removeClass("d-none");
+				}
+			});
+		});
+		paypal.Buttons({
+			style: {
+				layout: 'vertical',
+				color: 'silver',
+				tagline: 'false'
+			},
+			createOrder: (data, actions) => {
+				return fetch("/Cart/create-paypal-order", {
+					method: "post",
+				}).then((response) => {
+					if (!response.ok) {
+						return response.json().then(error => { throw error; });
+					}
+
+					return response.json();
+				}).then((order) => order.id)
+					.catch(error => alert(error.message));
+			},
+			onApprove: (data, actions) => {
+				return fetch(`/Cart/capture-paypal-order?orderId=${data.orderID}`, {
+					method: "post",
+				}).then((response) => {
+					if (!response.ok) {
+						return response.json().then(error => { throw error; });
+					}
+
+					//Đổi địa chỉ tới action thông báo thành công
+					window.location.href = "/Cart/PaymentSuccess";
+				}).catch(error => alert(error.message));
+			}
+		}).render('#paypal-button-container');
+
+	</script>
+}

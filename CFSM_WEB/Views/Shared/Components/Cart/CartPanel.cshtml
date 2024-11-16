@@ -1,0 +1,9 @@
+﻿@model CFSM_WEB.ViewModels.CartModel
+
+<li class="nav-item cart">
+    <a asp-action="Index" asp-controller="Cart" class="nav-link">
+        <span class="icon icon-shopping_cart"></span>
+        <span class="bag d-flex justify-content-center align-items-center"><small>@Model.Quantity</small></span>
+    </a>
+</li>
+

@@ -1,0 +1,65 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Hello</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+
+	<link rel="stylesheet" href="~/LayoutIndexCaPhe/css/open-iconic-bootstrap.min.css">
+	<link rel="stylesheet" href="~/LayoutIndexCaPhe/css/animate.css">
+
+	<link rel="stylesheet" href="~/LayoutIndexCaPhe/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="~/LayoutIndexCaPhe/css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="~/LayoutIndexCaPhe/css/magnific-popup.css">
+
+	<link rel="stylesheet" href="~/LayoutIndexCaPhe/css/aos.css">
+
+	<link rel="stylesheet" href="~/LayoutIndexCaPhe/css/ionicons.min.css">
+
+	<link rel="stylesheet" href="~/LayoutIndexCaPhe/css/bootstrap-datepicker.css">
+	<link rel="stylesheet" href="~/LayoutIndexCaPhe/css/jquery.timepicker.css">
+
+
+	<link rel="stylesheet" href="~/LayoutIndexCaPhe/css/flaticon.css">
+	<link rel="stylesheet" href="~/LayoutIndexCaPhe/css/icomoon.css">
+	<link rel="stylesheet" href="~/LayoutIndexCaPhe/css/style.css">
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+	@await Html.PartialAsync("_Nav")
+
+
+	@RenderBody()
+	
+	@await Html.PartialAsync("_Footer")
+	<!-- loader -->
+	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+
+
+	<script src="~/LayoutIndexCaPhe/js/jquery.min.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/jquery-migrate-3.0.1.min.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/popper.min.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/bootstrap.min.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/jquery.easing.1.3.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/jquery.waypoints.min.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/jquery.stellar.min.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/owl.carousel.min.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/jquery.magnific-popup.min.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/aos.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/jquery.animateNumber.min.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/bootstrap-datepicker.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/jquery.timepicker.min.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/scrollax.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script src="~/LayoutIndexCaPhe/js/google-map.js"></script>
+	<script src="~/LayoutIndexCaPhe/js/main.js"></script>
+	@RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,295 @@
+﻿@{
+    ViewData["title"] = "Menu";
+    Layout = "~/Views/Shared/_LayoutIndexCaPhe.cshtml";
+}
+
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<TDoAn>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<section class="home-slider owl-carousel">
+
+	<div class="slider-item" style="background-image: url(../LayoutIndexCaPhe/images/kongfuong2.jpg);" data-stellar-background-ratio="0.5">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row slider-text justify-content-center align-items-center">
+
+				<div class="col-md-7 col-sm-12 text-center ftco-animate">
+					<h1 class="mb-3 mt-5 bread">Our Menu</h1>
+					<p><a asp-action="Index" asp-controller="Home" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Home</a> <a asp-action="Menu" asp-controller="Home" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Menu</a></p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
+<section class="ftco-intro">
+	<div class="container-wrap">
+		<div class="wrap d-md-flex align-items-xl-end">
+			<div class="info">
+				<div class="row no-gutters">
+					<div class="col-md-4 d-flex ftco-animate fadeInUp ftco-animated">
+						<div class="icon"><span class="icon-phone"></span></div>
+						<div class="text">
+							<h3>097 566 7194</h3>
+							<p>Nope</p>
+						</div>
+					</div>
+					<div class="col-md-4 d-flex ftco-animate fadeInUp ftco-animated">
+						<div class="icon"><span class="icon-my_location"></span></div>
+						<div class="text">
+							<h3>3 Phố Cầu Giấy</h3>
+							<p>Số 3 phố Cầu Giấy, P.Láng Thượng, Q.Đống Đa, Hà Nội.</p>
+						</div>
+					</div>
+					<div class="col-md-4 d-flex ftco-animate fadeInUp ftco-animated">
+						<div class="icon"><span class="icon-clock-o"></span></div>
+						<div class="text">
+							<h3>Open Monday-Friday</h3>
+							<p>8:00am - 9:00pm</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</section>
+<section class="ftco-section">
+	<div class="container">
+		<div class="heading-section text-center ftco-animate fadeInUp ftco-animated">
+			<span class="subheading">NHỮNG MÓN NỔI BẬT</span>
+		</div>
+		<br />
+		<br />
+		<div class="row">
+			<div class="col-md-6 mb-5 pb-3">
+				<h3 class="mb-5 heading-pricing ftco-animate fadeInUp ftco-animated">Cà Phê</h3>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/ca_phe_den.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Cà phê đen</span></h3>
+							<span class="price">20000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Vị đậm, không đường</p>
+						</div>
+					</div>
+				</div>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/ca_phe_sua.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Cà phê sữa</span></h3>
+							<span class="price">25000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Cà phê đen pha với sữa đặc</p>
+						</div>
+					</div>
+				</div>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/ca_phe_da.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Cà phê đá</span></h3>
+							<span class="price">22000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Cà phê đen thêm đá</p>
+						</div>
+					</div>
+				</div>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/cappuccino.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Cà phê cappuccino</span></h3>
+							<span class="price">30000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Cà phê Ý với sữa đánh bọt</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6 mb-5 pb-3">
+				<h3 class="mb-5 heading-pricing ftco-animate fadeInUp ftco-animated">Đồ ăn nhanh</h3>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/hamburger.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Hamburger</span></h3>
+							<span class="price">45000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Bánh mì kẹp thịt bò, rau củ</p>
+						</div>
+					</div>
+				</div>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/pizza_phomai.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Pizza phô mai</span></h3>
+							<span class="price">90000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Bánh pizza với lớp phô mai</p>
+						</div>
+					</div>
+				</div>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/sandwich_trung.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Sandwich trứng</span></h3>
+							<span class="price">30000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Bánh mì sandwich kẹp trứng</p>
+						</div>
+					</div>
+				</div>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/khoai_tay_chien.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Khoai tây chiên</span></h3>
+							<span class="price">25000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Khoai tây chiên giòn</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<h3 class="mb-5 heading-pricing ftco-animate fadeInUp ftco-animated">Đồ ăn vặt</h3>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/banh_trang_tron.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Bánh tráng trộn</span></h3>
+							<span class="price">25000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Bánh tráng, trứng cút, khô bò</p>
+						</div>
+					</div>
+				</div>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/che_thai.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Chè thái</span></h3>
+							<span class="price">30000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Chè hoa quả theo mùa, thạch, sữa dừa</p>
+						</div>
+					</div>
+				</div>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/banh_mi_muoi_ot.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Bánh mì nướng muối ớt</span></h3>
+							<span class="price">22000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Bánh mì, muối ớt, phô mai</p>
+						</div>
+					</div>
+				</div>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/banh_bao_chien.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Bánh bao chiên</span></h3>
+							<span class="price">15000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Bánh bao chiên giòn</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<h3 class="mb-5 heading-pricing ftco-animate fadeInUp ftco-animated">Trà sữa</h3>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/tra_sua_tran_chau.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Trà sữa trân châu</span></h3>
+							<span class="price">30000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Trà sữa, trân châu đen</p>
+						</div>
+					</div>
+				</div>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/tra_sua_matcha.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Trà sữa matcha</span></h3>
+							<span class="price">32000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Trà sữa vị matcha</p>
+						</div>
+					</div>
+				</div>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/tra_sua_duong_den.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Trà sữa đường đen</span></h3>
+							<span class="price">35000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Trà sữa với trân châu đường đen</p>
+						</div>
+					</div>
+				</div>
+				<div class="pricing-entry d-flex ftco-animate fadeInUp ftco-animated">
+					<div class="img" style="background-image: url(@Url.Content("../ImagesMenu/tra_sua_socola.jpg"));"></div>
+					<div class="desc pl-3">
+						<div class="d-flex text align-items-center">
+							<h3><span>Trà sữa socola</span></h3>
+							<span class="price">32000vnd</span>
+						</div>
+						<div class="d-block">
+							<p>Trà sữa hương vị socola</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="ftco-menu mb-5 pb-5">
+	<div class="container">
+		<div class="row justify-content-center mb-5">
+			<div class="col-md-7 heading-section text-center ftco-animate fadeInUp ftco-animated">
+				<span class="subheading">Khám Phá</span>
+				<br />
+				<br />
+				<h2 class="mb-4">SẢN PHẨM CỦA CHÚNG TÔI</h2>
+				<p>Những người chỉ trích Kong Fuong không biết gì về cà phê và gà rán.</p>
+			</div>
+		</div>
+		@Html.Partial("PartialMenuDoAn", Model)
+		<div class="row mt-5">
+			<div class="col text-center">
+				<div class="block-27 d-flex justify-content-center">
+					@Html.PagedListPager(Model, page => Url.Action("Menu", new { page = page }))
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,60 @@
+﻿@model CFSM_WEB.Models.TKhachHang
+
+@{
+    ViewData["Title"] = "Profile";
+	Layout = "_LayoutIndexCaPhe";
+}
+<section class="home-slider owl-carousel">
+
+    <div class="slider-item" style="background-image: url(../LayoutIndexCaPhe/images/kongfuong2.jpg);" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row slider-text justify-content-center align-items-center">
+
+                <div class="col-md-7 col-sm-12 text-center ftco-animate">
+                    <h1 class="mb-3 mt-5 bread">Profile</h1>
+                    <p><a asp-action="Index" asp-controller="Home" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Home</a> <a asp-action="Menu" asp-controller="Home" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Menu</a></p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+<h2>Thông tin cá nhân</h2>
+
+<!-- Profile Update Form -->
+<form asp-action="Profile" method="post">
+    <div class="form-group">
+        <label for="HoTen">Họ tên</label>
+        <input asp-for="HoTen" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="TenHienThi">Tên hiển thị</label>
+        <input asp-for="TenHienThi" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="DiaChi">Địa chỉ</label>
+        <input asp-for="DiaChi" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="SoDienThoai">Số điện thoại</label>
+        <input asp-for="SoDienThoai" class="form-control" />
+    </div>
+
+   
+</form>
+<div class="container">
+    <a asp-action="LogOut">
+        <button type="submit" class="btn btn-primary">Log Out</button>
+        </a>
+    
+</div>
+

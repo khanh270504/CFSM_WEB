@@ -1,0 +1,48 @@
+﻿@model IEnumerable<TMenu>
+
+<div class="nav ftco-animate nav-pills justify-content-center fadeInUp ftco-animated" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+    @foreach (var item in Model)
+    {
+        var getUrl = "https://localhost:7252/api/DoAnapi/" + item.MaMenu;
+        <a class="nav-link active show" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true" onclick="showProductByCategory('@getUrl')">@item.TenMenu</a>
+    }    
+</div>
+
+<script>
+    function showProductByCategory(getUrl) {
+        var str = '';
+        $.ajax({
+            type: 'GET',
+            url: getUrl,
+            dataType: 'json',
+            success: function (data) {
+                $.each(data, function (key, val) {
+                    var linkimg = "../ImagesMenu/" + $.trim(val.anhDoAn);/*  + $.trim(val.anhDaiDien); */
+                    str += `
+                                <div class="col-md-4 text-center">								
+                                <div class="menu-wrap">
+                                <a href="/Home/ChiTietDoAn?maDoAn=${$.trim(val.maDoAn)}" class="menu-img img mb-4" style="background-image: url('${linkimg}');"></a>
+                                <div class="text">
+                                <h3><a href="/Home/ChiTietDoAn?maDoAn=${$.trim(val.maDoAn)}">${$.trim(val.tenDoAn)}</a></h3>
+                                <p>${$.trim(val.moTaDoAn)}</p>
+                                <p class="price"><span>$${$.trim(val.donGia)}</span></p>
+                                <p><a href="/Cart/AddToCart?id=${$.trim(val.maDoAn)}" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+                                </div>
+                                </div>
+                                </div>
+                            `
+                });
+                $("#v-pills-1").html(str);
+            },
+            error: function (xhr) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+</script>
+
+
+
+
+
+
