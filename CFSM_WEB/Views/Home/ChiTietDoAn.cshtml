@@ -31,23 +31,26 @@
                 <h3>@Model.doAn.TenDoAn</h3>
                 <p class="price"><span>@Model.doAn.DonGia vnd</span></p>
                 <p>@Model.doAn.MoTaDoAn</p>
-                <div class="row mt-4">
-                    <div class="w-100"></div>
-                    <div class="input-group col-md-6 d-flex mb-3">
-                        <span class="input-group-btn mr-2">
-                            <button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
-                                <i class="icon-minus"></i>
-                            </button>
-                        </span>
-                        <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="1" max="100">
-                        <span class="input-group-btn ml-2">
-                            <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
-                                <i class="icon-plus"></i>
-                            </button>
-                        </span>
+                <form asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.doAn.MaDoAn">
+                    <div class="row mt-4">
+                        <div class="w-100"></div>
+                        <div class="input-group col-md-6 d-flex mb-3">
+                            <div class="input-group-prepend">
+                                <button type="button" class="btn btn-outline-secondary btn-sm rounded-circle quantity-left-minus" onclick="this.parentNode.nextElementSibling.stepDown()">
+                                    <i class="icon-minus"></i>
+                                </button>
+                            </div>
+                            <input type="number" name="quantity" class="form-control text-center" value="1" min="1" step="1">
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-outline-secondary btn-sm rounded-circle quantity-right-plus" onclick="this.parentNode.previousElementSibling.stepUp()">
+                                    <i class="icon-plus"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <p><a href="cart.html" class="btn btn-primary py-3 px-5">Add to Cart</a></p>
+                    <p><button class="btn btn-primary btn-outline-primary py-3 px-5">Add to Cart</button></p>
+
+                </form>
             </div>
         </div>
     </div>
@@ -65,17 +68,17 @@
         <div class="row">
             @foreach (var item in Model.listDoAn)
             {
-                    <div class="col-md-3">
-                        <div class="menu-entry">
-                            <a href="#" class="img" style="background-image: url('@Url.Content("~/ImagesMenu/" + item.AnhDoAn)');"></a>
-                            <div class="text text-center pt-4">
-                                <h3><a href="#">@item.TenDoAn</a></h3>
-                                <p>@item.MoTaDoAn</p>
-                                <p class="price"><span>@item.DonGia</span></p>
-                                <p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
-                            </div>
+                <div class="col-md-3">
+                    <div class="menu-entry">
+                        <a href="#" class="img" style="background-image: url('@Url.Content("~/ImagesMenu/" + item.AnhDoAn)');"></a>
+                        <div class="text text-center pt-4">
+                            <h3><a asp-controller="Home" asp-action="ChiTietDoAn" asp-route-maDoAn="@item.MaDoAn">@item.TenDoAn</a></h3>
+                            <p>@item.MoTaDoAn</p>
+                            <p class="price"><span>@item.DonGia</span></p>
+                            <p><a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.MaDoAn" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
                         </div>
                     </div>
+                </div>
             }
         </div>
     </div>
