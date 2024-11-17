@@ -30,22 +30,46 @@ namespace CFSM_WEB.Controllers
 
             if (ModelState.IsValid)
             {
-                // Kiểm tra tài khoản khách hàng
+                // Kiểm tra tài khoản khách hàng hoặc admin
                 var acc = db.TTaiKhoans.SingleOrDefault(p => p.TenDangNhap == model.UserName);
 
                 if (acc == null)
                 {
                     // Thêm lỗi nếu không tìm thấy tài khoản
-                    ModelState.AddModelError("UserName", "Không có khách hàng này");
+                    ModelState.AddModelError("UserName", "Không có tài khoản này");
                     return View(model);
                 }
                 else
                 {
-                    if (acc.LoaiTaiKhoan == 1)
+                    if (acc.LoaiTaiKhoan == 1) // Nếu tài khoản là admin
                     {
+                        
                         if (acc.MatKhau == model.Password)
                         {
-                            return RedirectToAction("Index", "HomeAdmin", new { area = "admin" });
+                            // Tạo Claims cho admin
+                            var nhanVien = db.TNhanViens.SingleOrDefault(k => k.TenDangNhap == model.UserName);
+                            var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, nhanVien.HoTen),
+                        new Claim(MySetting.CLAIM_CUSTOMERID, nhanVien.MaNhanVien.ToString()),
+                        new Claim(ClaimTypes.Role, "Admin")  
+                    };
+
+                            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                            // Duy trì phiên đăng nhập cho admin
+                            await HttpContext.SignInAsync(claimsPrincipal);
+
+                            // Kiểm tra đường dẫn trở về sau khi đăng nhập
+                            if (Url.IsLocalUrl(ReturnUrl))
+                            {
+                                return Redirect(ReturnUrl); 
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index", "HomeAdmin", new { area = "admin" }); 
+                            }
                         }
                         else
                         {
@@ -53,52 +77,54 @@ namespace CFSM_WEB.Controllers
                             return View(model);
                         }
                     }
-
-
-                    var salt = Convert.FromBase64String(acc.Salt);
-                    var isPasswordValid = PasswordHelper.VerifyPassword(model.Password, acc.MatKhau, salt);
-                    if (!isPasswordValid)
-                    {
-                        // Thêm lỗi nếu mật khẩu sai
-                        ModelState.AddModelError("Password", "Sai thông tin đăng nhập");
-                        return View(model);
-                    }
                     else
                     {
-                        var khachHang = db.TKhachHangs.SingleOrDefault(k => k.TenDangNhap == model.UserName);
+                        
+                        var salt = Convert.FromBase64String(acc.Salt);
+                        var isPasswordValid = PasswordHelper.VerifyPassword(model.Password, acc.MatKhau, salt);
 
-
-                        // Tạo các Claims để đăng nhập
-                        var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, khachHang.HoTen),
-                        new Claim(MySetting.CLAIM_CUSTOMERID, khachHang.MaKhachHang.ToString()),
-                        new Claim(ClaimTypes.Role, "Customer")
-                    };
-
-                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-                        // Duy trì phiên đăng nhập
-                        await HttpContext.SignInAsync(claimsPrincipal);
-
-                        // Kiểm tra đường dẫn trở về sau khi đăng nhập
-                        if (Url.IsLocalUrl(ReturnUrl))
+                        if (!isPasswordValid)
                         {
-                            return Redirect(ReturnUrl);
+                            
+                            ModelState.AddModelError("Password", "Sai thông tin đăng nhập");
+                            return View(model);
                         }
                         else
                         {
-                            return Redirect("/");
+                            var khachHang = db.TKhachHangs.SingleOrDefault(k => k.TenDangNhap == model.UserName);
+
+                            // Tạo Claims cho khách hàng
+                            var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Name, khachHang.HoTen),
+                        new Claim(MySetting.CLAIM_CUSTOMERID, khachHang.MaKhachHang.ToString()),
+                        new Claim(ClaimTypes.Role, "Customer")  // Đánh dấu đây là role Customer
+                    };
+
+                            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+                            // Duy trì phiên đăng nhập cho khách hàng
+                            await HttpContext.SignInAsync(claimsPrincipal);
+
+                            
+                            if (Url.IsLocalUrl(ReturnUrl))
+                            {
+                                return Redirect(ReturnUrl);
+                            }
+                            else
+                            {
+                                return Redirect("/"); 
+                            }
                         }
                     }
-
                 }
             }
 
             // Nếu ModelState không hợp lệ hoặc không phải POST request
             return View(model);
         }
+
 
         [Authorize]
         public IActionResult Profile()

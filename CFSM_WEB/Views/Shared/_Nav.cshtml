@@ -31,7 +31,7 @@
                     <a asp-action="Index" asp-controller="Cart" class="nav-link">Cart</a>
                 </li>
                 <li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Contact" ? "active" : "")">
-                    <a asp-action="Index" asp-controller="HomeAdmin" asp-area="admin" class="nav-link">Contact</a>
+                    <a asp-action="Contact" asp-controller="Home" class="nav-link">Contact</a>
                 </li>
             </ul>
         </div>

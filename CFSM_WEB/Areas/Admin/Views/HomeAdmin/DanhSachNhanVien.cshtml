@@ -1,0 +1,99 @@
+﻿@using CFSM_WEB.Models;
+@model List<TNhanVien>
+
+@{
+    ViewData["Title"] = "DanhSachNhanVien";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<h1>Danh sách nhân viên</h1>
+
+<p>
+    <a asp-action="ThemTaiKhoanNhanVien">Thêm Tài Khoản Nhân Viên</a>
+</p>
+
+<p>@TempData["DungHoatDongNV"]</p>
+<table class="table">
+    <thead>
+        <tr class="table-success">
+            <th>
+                Mã nhân viên
+            </th>
+            <th>
+                Tên nhân viên
+            </th>
+            <th>
+                Email
+            </th>
+            <th>Địa chỉ</th>
+            <th>
+                SĐT
+            </th>
+            <th>Chức vụ</th>
+            <th>Tên đăng nhập</th>
+            <th>Trạng thái HĐ</th>
+            <th>Thao Tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            string @cls = "table-warning";
+        }
+        @foreach (var item in Model)
+        {
+            i = i + 1;
+            cls = "table-warning";
+            if (i % 2 == 0)
+            {
+                cls = "table-danger";
+            }
+            <tr class="@cls">
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaNhanVien)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoTen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiaChi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoDienThoai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ChucVu)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenDangNhap)
+                </td>
+                @{
+                    if (item.TrangThai == 1)
+                    {
+                        <td>Còn hoạt động</td>
+                    }
+                    else
+                    {
+                        <td>Dừng hoạt động</td>
+                    }
+                }
+                @{
+                    if (item.TrangThai == 1)
+                    {
+                        <td><a asp-action="DungHoatDongNV" asp-route-maNV="@item.MaNhanVien">Dừng hoạt động</a></td>
+                    }
+                    else
+                    {
+                        <td> </td>
+                    }
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>

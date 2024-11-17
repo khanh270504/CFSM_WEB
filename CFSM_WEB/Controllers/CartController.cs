@@ -34,7 +34,7 @@ namespace CFSM_WEB.Controllers
                 if(sanPham == null)
                 {
                     TempData["Message"] = $"Khong tim thay {id}";
-                    return Redirect("/404");
+                    return Redirect("/Cart/Error");
                 }
                 item = new CartItem
                 {

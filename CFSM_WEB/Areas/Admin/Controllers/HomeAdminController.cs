@@ -6,32 +6,47 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Azure;
 using X.PagedList.Extensions;
 using CFSM_WEB.ViewModels;
+using CFSM_WEB.Helpers;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Hosting;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
+using System.Net.NetworkInformation;
+using System;
 
 namespace CFSM_WEB.Areas.Admin.Controllers
 {
-	[Area("admin")]
-	[Route("admin")]
-	[Route("admin/homeadmin")]
-	public class HomeAdminController : Controller
+    [Area("admin")]
+    [Route("admin")]
+    [Route("admin/homeadmin")]
+    public class HomeAdminController : Controller
     {
         QuanLyQuanCaPheContext db = new QuanLyQuanCaPheContext();
-		[Route("")]
-		[Route("index")]
-		public IActionResult Index()
+        [Route("")]
+        [Route("index")]
+        public IActionResult Index()
         {
-            return View();
-        }
-		[Route("DanhMucSP")]
-		public IActionResult DanhMucSP(int? page)
-		{
-			int pageSize = 8;
-			int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var customerIdClaim = User.FindFirst(MySetting.CLAIM_CUSTOMERID);
+            var customerId = int.Parse(customerIdClaim.Value);
+            var nhanVien = db.TNhanViens.SingleOrDefault(p => p.MaNhanVien == customerId);
 
-			var lstSanPham = db.TDoAns.AsNoTracking().OrderBy(x => x.TenDoAn).Include(x => x.MaMenuNavigation);
-			PagedList<TDoAn> lst = new PagedList<TDoAn>(lstSanPham, pageNumber, pageSize);
-			return View(lst);
+            if (nhanVien == null)
+            {
+                return NotFound();  
+            }     
+            return View(nhanVien);  
         }
-        
+        [Route("DanhMucSP")]
+        public IActionResult DanhMucSP(int? page)
+        {
+            int pageSize = 8;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+
+            var lstSanPham = db.TDoAns.AsNoTracking().OrderBy(x => x.TenDoAn).Include(x => x.MaMenuNavigation);
+            PagedList<TDoAn> lst = new PagedList<TDoAn>(lstSanPham, pageNumber, pageSize);
+            return View(lst);
+        }
+
         [Route("ThemSanPhamMoi")]
         [HttpGet]
         public IActionResult ThemSanPhamMoi()
@@ -103,7 +118,7 @@ namespace CFSM_WEB.Areas.Admin.Controllers
                 db.TDoAns.Attach(sanPham);
                 db.Entry(sanPham).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("DanhMucSP","HomeAdmin");
+                return RedirectToAction("DanhMucSP", "HomeAdmin");
             }
             return View(sanPham);
         }
@@ -118,7 +133,7 @@ namespace CFSM_WEB.Areas.Admin.Controllers
             {
                 TempData["Message"] = "Khong ban duoc san pham nay";
                 return RedirectToAction("DanhMucSP", "HomeAdmin");
-            }            
+            }
             db.Remove(db.TDoAns.Find(maSanPham));
             db.SaveChanges();
             TempData["Message"] = "San pham da duoc xoa";
@@ -150,7 +165,7 @@ namespace CFSM_WEB.Areas.Admin.Controllers
             var listChiTietHD = db.TChiTietHds
                                   .Where(x => x.MaHoaDon == maHD)
                                   .Include(x => x.MaDoAnNavigation)
-                                  .Include(x => x.MaHoaDonNavigation)                                  
+                                  .Include(x => x.MaHoaDonNavigation)
                                   .ToList();
 
             // Kiểm tra xem danh sách có dữ liệu hay không
@@ -164,10 +179,10 @@ namespace CFSM_WEB.Areas.Admin.Controllers
         [Route("DanhSachKhachHang")]
         [HttpGet]
         public IActionResult DanhSachKhachHang()
-        {         
+        {
             var listkh = db.TKhachHangs.ToList();
-                        
-            return View(listkh);            
+
+            return View(listkh);
         }
         [Route("DanhSachKhachHangOn")]
         [HttpGet]
@@ -278,6 +293,86 @@ namespace CFSM_WEB.Areas.Admin.Controllers
                 ViewBag.Message = "Không tìm thấy khách hàng với mã này.";
                 return View("DanhSachKhachHang", new List<TKhachHang>());
             }
+        }
+        [Route("DanhSachNhanVien")]
+        [HttpGet]
+        public IActionResult DanhSachNhanVien()
+        {
+            var listNhanVien = db.TNhanViens.ToList();
+
+            return View(listNhanVien);
+        }
+        [Route("DungHoatDongNV")]
+        [HttpGet]
+        public IActionResult DungHoatDongNV(int maNV)
+        {
+            TempData["DungHoatDongNV"] = "";
+
+            // Tìm khách hàng theo tên đăng nhập
+            var nhanvien = db.TNhanViens.FirstOrDefault(k => k.MaNhanVien == maNV);
+
+            // Kiểm tra nếu khách hàng tồn tại
+            if (nhanvien != null)
+            {
+                // Cập nhật trạng thái khách hàng thành 0
+                nhanvien.TrangThai = 0;
+                db.SaveChanges();
+
+                TempData["DungHoatDongNV"] = "Nhân viên đã bị dừng hoạt động";
+            }
+            else
+            {
+                TempData["DungHoatDongNV"] = "Nhân viên không tồn tại";
+            }
+
+            return RedirectToAction("DanhSachNHanVien", "HomeAdmin");
+        }
+        [Route("ThemTaiKhoanNhanVien")]
+        [HttpGet]
+
+        public IActionResult ThemTaiKhoanNhanVien()
+        {
+            return View();
+        }
+        [Route("ThemTaiKhoanNhanVien")]
+        [HttpPost]
+        public IActionResult ThemTaiKhoanNhanVien(RegisterVM model)
+        {
+            if (ModelState.IsValid)
+            {
+                    var acc = db.TTaiKhoans.FirstOrDefault(t => t.TenDangNhap == model.UserName);
+                    if (acc != null)
+                    {
+                        ModelState.AddModelError("", "Tên đăng nhập đã tồn tại");
+                        return View(model);
+                    }
+                    var taiKhoan = new TTaiKhoan
+                    {
+                        TenDangNhap = model.UserName,
+                        MatKhau = model.Password,           
+                        LoaiTaiKhoan = 1
+                    };
+
+                    // Thêm sản phẩm vào database
+                    db.TTaiKhoans.Add(taiKhoan);
+                    db.SaveChanges();
+                    var nhanVien = new TNhanVien
+                    {
+                        HoTen = model.FullName,                   
+                        Email = model.Email,
+                        DiaChi = model.Address,
+                        SoDienThoai = model.PhoneNumber,
+                        TenDangNhap = model.UserName,
+                        ChucVu = "Nhân viên",
+                        TrangThai = 1
+
+                    };
+                    db.TNhanViens.Add(nhanVien);
+                    db.SaveChanges();
+                    return RedirectToAction("DanhSachNhanVien");
+                }
+               
+                   return View(model);
         }
 
     }
