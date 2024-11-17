@@ -364,6 +364,7 @@ namespace CFSM_WEB.Areas.Admin.Controllers
                         SoDienThoai = model.PhoneNumber,
                         TenDangNhap = model.UserName,
                         ChucVu = "Nhân viên",
+                        TenHienThi = "a",
                         TrangThai = 1
 
                     };

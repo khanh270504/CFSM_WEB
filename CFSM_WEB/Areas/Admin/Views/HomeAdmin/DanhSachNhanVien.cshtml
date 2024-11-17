@@ -9,9 +9,8 @@
 
 <h1>Danh sách nhân viên</h1>
 
-<p>
-    <a asp-action="ThemTaiKhoanNhanVien">Thêm Tài Khoản Nhân Viên</a>
-</p>
+<button type="button" onclick="location.href='@Url.Action("ThemTaiKhoanNhanVien")'" class="btn btn-primary">Thêm tài khoản nhân viên</button>
+
 
 <p>@TempData["DungHoatDongNV"]</p>
 <table class="table">
