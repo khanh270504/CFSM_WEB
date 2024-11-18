@@ -33,13 +33,13 @@ public partial class QuanLyQuanCaPheContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-M57B9H4\\SQLEXPRESS;Initial Catalog=QuanLyQuanCaPhe;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-8N1GJPH;Initial Catalog=QuanLyQuanCaPhe;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TBlog>(entity =>
         {
-            entity.HasKey(e => e.MaBlog).HasName("PK__tBlog__86827C73E3877E20");
+            entity.HasKey(e => e.MaBlog).HasName("PK__tBlog__86827C730E44E304");
 
             entity.ToTable("tBlog");
 
@@ -50,7 +50,7 @@ public partial class QuanLyQuanCaPheContext : DbContext
 
         modelBuilder.Entity<TChiTietHd>(entity =>
         {
-            entity.HasKey(e => e.MaCthd).HasName("PK__tChiTiet__1E4FA77175FFC5A5");
+            entity.HasKey(e => e.MaCthd).HasName("PK__tChiTiet__1E4FA771A7713AFC");
 
             entity.ToTable("tChiTietHD", tb => tb.HasTrigger("trg_UpdateThanhTien"));
 
@@ -73,7 +73,7 @@ public partial class QuanLyQuanCaPheContext : DbContext
 
         modelBuilder.Entity<TDoAn>(entity =>
         {
-            entity.HasKey(e => e.MaDoAn).HasName("PK__tDoAn__2DCF1067CD9722B2");
+            entity.HasKey(e => e.MaDoAn).HasName("PK__tDoAn__2DCF1067FD098BB8");
 
             entity.ToTable("tDoAn");
 
@@ -89,7 +89,7 @@ public partial class QuanLyQuanCaPheContext : DbContext
 
         modelBuilder.Entity<THoaDon>(entity =>
         {
-            entity.HasKey(e => e.MaHoaDon).HasName("PK__tHoaDon__835ED13B2107CB31");
+            entity.HasKey(e => e.MaHoaDon).HasName("PK__tHoaDon__835ED13B19894BD9");
 
             entity.ToTable("tHoaDon");
 
@@ -115,7 +115,7 @@ public partial class QuanLyQuanCaPheContext : DbContext
 
         modelBuilder.Entity<TKhachHang>(entity =>
         {
-            entity.HasKey(e => e.MaKhachHang).HasName("PK__tKhachHa__88D2F0E55F3C6C6B");
+            entity.HasKey(e => e.MaKhachHang).HasName("PK__tKhachHa__88D2F0E5C94B3477");
 
             entity.ToTable("tKhachHang");
 
@@ -134,7 +134,7 @@ public partial class QuanLyQuanCaPheContext : DbContext
 
         modelBuilder.Entity<TMenu>(entity =>
         {
-            entity.HasKey(e => e.MaMenu).HasName("PK__tMenu__0EBABE425B3D69EE");
+            entity.HasKey(e => e.MaMenu).HasName("PK__tMenu__0EBABE42FB03A8FC");
 
             entity.ToTable("tMenu");
 
@@ -143,7 +143,7 @@ public partial class QuanLyQuanCaPheContext : DbContext
 
         modelBuilder.Entity<TNhanVien>(entity =>
         {
-            entity.HasKey(e => e.MaNhanVien).HasName("PK__tNhanVie__77B2CA472C703554");
+            entity.HasKey(e => e.MaNhanVien).HasName("PK__tNhanVie__77B2CA47E9CA04ED");
 
             entity.ToTable("tNhanVien");
 
@@ -164,7 +164,7 @@ public partial class QuanLyQuanCaPheContext : DbContext
 
         modelBuilder.Entity<TTaiKhoan>(entity =>
         {
-            entity.HasKey(e => e.TenDangNhap).HasName("PK__tTaiKhoa__55F68FC1BFB39875");
+            entity.HasKey(e => e.TenDangNhap).HasName("PK__tTaiKhoa__55F68FC11C16BB11");
 
             entity.ToTable("tTaiKhoan");
 

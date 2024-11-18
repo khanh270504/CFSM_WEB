@@ -17,7 +17,7 @@ namespace CFSM_WEB.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(int? page)
+        public IActionResult IndexHome(int? page)
         {
             int pageSize = 6;
             int pageNumber = page == null || page < 0 ? 1 : page.Value;

@@ -1,8 +1,8 @@
 ﻿
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
-            <a asp-action="Index" asp-controller="Home" class="navbar-brand">Kong Fuong<small>Coffee</small></a>
+        <li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "IndexHome" ? "active" : "")">
+            <a asp-action="IndexHome" asp-controller="Home" class="navbar-brand">Kong Fuong<small>Coffee</small></a>
         </li>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,8 +12,8 @@
         <!-- Menu chính -->
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
-                    <a asp-action="Index" asp-controller="Home" class="nav-link">Home</a>
+                <li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "IndexHome" ? "active" : "")">
+                    <a asp-action="IndexHome" asp-controller="Home" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Menu" ? "active" : "")">
                     <a asp-action="Menu" asp-controller="Home" class="nav-link">Menu</a>
@@ -27,7 +27,7 @@
                 <li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "About" ? "active" : "")">
                     <a asp-action="About" asp-controller="Home" class="nav-link">About</a>
                 </li>
-                <li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Cart" ? "active" : "")">
+                <li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Index" ? "active" : "")">
                     <a asp-action="Index" asp-controller="Cart" class="nav-link">Cart</a>
                 </li>
                 <li class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Contact" ? "active" : "")">
@@ -41,8 +41,8 @@
             @await Component.InvokeAsync("Cart")
 
             @if (User.Identity.IsAuthenticated)
-            {             
-                <div class="nav-item">
+            {
+                <div class="nav-item @(ViewContext.RouteData.Values["action"].ToString() == "Profile" ? "active" : "")">
 
          
                     <a asp-action="Profile" asp-controller="KhachHang" class="nav-link">
