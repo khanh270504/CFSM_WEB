@@ -43,24 +43,29 @@ namespace CFSM_WEB.Controllers
                 {
                     if (acc.LoaiTaiKhoan == 1) // Nếu tài khoản là admin
                     {
-                        
+                        var nhanVien = db.TNhanViens.SingleOrDefault(k => k.TenDangNhap == model.UserName);
+                           if(nhanVien.TrangThai == 0)
+                            {
+                                ModelState.AddModelError("", "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.");
+                                return View(model);
+                            }
                         if (acc.MatKhau == model.Password)
                         {
                             // Tạo Claims cho admin
-                            var nhanVien = db.TNhanViens.SingleOrDefault(k => k.TenDangNhap == model.UserName);
+                            
                             var claims = new List<Claim>
-                    {
+                            {
                         new Claim(ClaimTypes.Name, nhanVien.HoTen),
                         new Claim(MySetting.CLAIM_CUSTOMERID, nhanVien.MaNhanVien.ToString()),
                         new Claim(ClaimTypes.Role, "Admin")  
-                    };
+                            };
 
                             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
                             // Duy trì phiên đăng nhập cho admin
                             await HttpContext.SignInAsync(claimsPrincipal);
-
+                          
                             // Kiểm tra đường dẫn trở về sau khi đăng nhập
                             if (Url.IsLocalUrl(ReturnUrl))
                             {
@@ -92,7 +97,11 @@ namespace CFSM_WEB.Controllers
                         else
                         {
                             var khachHang = db.TKhachHangs.SingleOrDefault(k => k.TenDangNhap == model.UserName);
-
+                            if(khachHang.TrangThai == 0)
+                            {
+                                ModelState.AddModelError("", "Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.");
+                                return View(model);
+                            }
                             // Tạo Claims cho khách hàng
                             var claims = new List<Claim>
                     {

@@ -11,7 +11,7 @@
 <h1>Danh mục sản phẩm</h1>
 
 <p>
-    <a asp-action="ThemSanPhamMoi">Create New</a>
+    <button type="button" onclick="location.href='@Url.Action("ThemSanPhamMoi")'" class="btn btn-primary">Thêm Thực Đơn</button>
 </p>
 
 <p>@TempData["XoaSanPham"]</p>
@@ -77,8 +77,9 @@
                     @Html.DisplayFor(modelItem => item.MaMenuNavigation.TenMenu)
                 </td>
                 <td>
-                    <a asp-action="SuaSanPham" asp-route-maSanPham="@item.MaDoAn">Edit</a> |                    
-                    <a asp-action="XoaSanPham" asp-route-maSanPham="@item.MaDoAn">Delete</a>
+                    <button class="btn btn-primary" onclick="window.location.href='@Url.Action("SuaSanPham", new { maSanPham = item.MaDoAn })'">Edit</button>
+                    <button class="btn btn-danger" onclick="window.location.href='@Url.Action("XoaSanPham", new { maSanPham = item.MaDoAn })'">Delete</button>
+
                 </td>
             </tr>
         }

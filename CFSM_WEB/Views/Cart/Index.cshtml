@@ -104,50 +104,50 @@
           </div>
         </div>
         <div class="row">
-        	<div class="col-md-3">
-        		<div class="menu-entry">
-    					<a href="#" class="img" style="background-image: url(images/menu-1.jpg);"></a>
-    					<div class="text text-center pt-4">
-    						<h3><a href="#">Coffee Capuccino</a></h3>
-    						<p>A small river named Duden flows by their place and supplies</p>
-    						<p class="price"><span>$5.90</span></p>
-    						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
-    					</div>
-    				</div>
-        	</div>
-        	<div class="col-md-3">
-        		<div class="menu-entry">
-    					<a href="#" class="img" style="background-image: url(images/menu-2.jpg);"></a>
-    					<div class="text text-center pt-4">
-    						<h3><a href="#">Coffee Capuccino</a></h3>
-    						<p>A small river named Duden flows by their place and supplies</p>
-    						<p class="price"><span>$5.90</span></p>
-    						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
-    					</div>
-    				</div>
-        	</div>
-        	<div class="col-md-3">
-        		<div class="menu-entry">
-    					<a href="#" class="img" style="background-image: url(images/menu-3.jpg);"></a>
-    					<div class="text text-center pt-4">
-    						<h3><a href="#">Coffee Capuccino</a></h3>
-    						<p>A small river named Duden flows by their place and supplies</p>
-    						<p class="price"><span>$5.90</span></p>
-    						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
-    					</div>
-    				</div>
-        	</div>
-        	<div class="col-md-3">
-        		<div class="menu-entry">
-    					<a href="#" class="img" style="background-image: url(images/menu-4.jpg);"></a>
-    					<div class="text text-center pt-4">
-    						<h3><a href="#">Coffee Capuccino</a></h3>
-    						<p>A small river named Duden flows by their place and supplies</p>
-    						<p class="price"><span>$5.90</span></p>
-    						<p><a href="#" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
-    					</div>
-    				</div>
-        	</div>
+            <div class="col-md-3">
+                <div class="menu-entry">
+                    <a asp-action="ChiTietDoAn" asp-controller="Home" asp-route-maDoAn="5" class="img" style="background-image: url(../ImagesMenu/cappuccino.jpg);"></a>
+                    <div class="text text-center pt-4">
+                        <h3><a asp-action="ChiTietDoAn" asp-controller="Home" asp-route-maDoAn="5">Coffee Capuccino</a></h3>
+                        <p>Cà phê Ý với sữa đánh bọt</p>
+                        <p class="price"><span>30000 vnd</span></p>
+                        <p><a asp-action="AddToCart" asp-controller="Cart" asp-route-id="5" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="menu-entry">
+                    <a asp-action="ChiTietDoAn" asp-controller="Home" asp-route-maDoAn="1" class="img" style="background-image: url(../ImagesMenu/ca_phe_den.jpg);"></a>
+                    <div class="text text-center pt-4">
+                        <h3><a asp-action="ChiTietDoAn" asp-controller="Home" asp-route-maDoAn="1">Coffee Đen</a></h3>
+                        <p>Vị đậm, không đường</p>
+                        <p class="price"><span>20000 vnd</span></p>
+                        <p><a asp-action="AddToCart" asp-controller="Cart" asp-route-id="1" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="menu-entry">
+                    <a asp-action="ChiTietDoAn" asp-controller="Home" asp-route-maDoAn="2" class="img" style="background-image: url(../ImagesMenu/ca_phe_sua.jpg);"></a>
+                    <div class="text text-center pt-4">
+                        <h3><a asp-action="ChiTietDoAn" asp-controller="Home" asp-route-maDoAn="2">Coffee Sữa</a></h3>
+                        <p>Cà phê đen pha với sữa đặc</p>
+                        <p class="price"><span>25000 vnd</span></p>
+                        <p><a asp-action="AddToCart" asp-controller="Cart" asp-route-id="2" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="menu-entry">
+                    <a asp-action="ChiTietDoAn" asp-controller="Home" asp-route-maDoAn="3" class="img" style="background-image: url(../ImagesMenu/bac_xiu.jpg);"></a>
+                    <div class="text text-center pt-4">
+                        <h3><a asp-action="ChiTietDoAn" asp-controller="Home" asp-route-maDoAn="3">Coffee Bạc Xỉu</a></h3>
+                        <p>Cà phê pha với nhiều sữa</p>
+                        <p class="price"><span>27000 vnd</span></p>
+                        <p><a asp-action="AddToCart" asp-controller="Cart" asp-route-id="3" class="btn btn-primary btn-outline-primary">Add to cart</a></p>
+                    </div>
+                </div>
+            </div>
         </div>
     	</div>
     </section>

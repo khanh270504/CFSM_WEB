@@ -16,8 +16,9 @@
 					<span class="login100-form-title">
 						Member Login
 					</span>
+				@Html.ValidationSummary(false, "", new { @class = "text-danger" })
 				<span class="text-danger">
-					@Html.ValidationMessageFor(m => m.UserName)
+					
 				</span>
 					<div class="wrap-input100 validate-input" data-validate="Valid email is required ">
 						<input asp-for="@Model.UserName" class="input100" type="text" placeholder="User">
@@ -36,7 +37,7 @@
 						</span>
 					</div>
 				<span class="text-danger">
-					@Html.ValidationMessageFor(m => m.Password)
+					
 				</span>
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">

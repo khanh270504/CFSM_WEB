@@ -182,36 +182,73 @@ namespace CFSM_WEB.Controllers
 
 		[Authorize]
 		[HttpPost("/Cart/capture-paypal-order")]
-		public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
-		{
-			try
-			{
-				var response = await _paypalClient.CaptureOrder(orderID);
+        public async Task<IActionResult> CapturePaypalOrder(string orderID, CancellationToken cancellationToken)
+        {
+            try
+            {
+                // Gọi API PayPal để capture đơn hàng
+                var response = await _paypalClient.CaptureOrder(orderID);
 
-                // Lưu database đơn hàng của mình
+                if (response == null  || response.status != "COMPLETED")
+                {
+                    // Kiểm tra nếu PayPal trả về lỗi hoặc giao dịch không thành công
+                    return BadRequest("Lỗi khi xử lý giao dịch PayPal.");
+                }
+
+                // Lấy ID khách hàng từ session
+                var customerId = int.Parse(HttpContext.User.Claims.SingleOrDefault(p => p.Type == MySetting.CLAIM_CUSTOMERID)?.Value);
+                var khachHang = db.TKhachHangs.SingleOrDefault(p => p.MaKhachHang == customerId);
+                // Tạo hóa đơn
                 var hoaDon = new THoaDon
                 {
-                    MaKhachHang = int.Parse(HttpContext.User.Claims.SingleOrDefault(p => p.Type == MySetting.CLAIM_CUSTOMERID)?.Value),
-                    HoTen = response.payer.name.given_name,  // Hoặc lấy từ thông tin trả về của PayPal
+                    MaKhachHang = customerId,
+                    HoTen = response.payer.name.given_name,
+                    DiaChi = khachHang.DiaChi,
                     NgayLap = DateTime.Now,
                     CachThanhToan = "PayPal",
-                    MaNhanVien = 1,
+                    MaNhanVien = 1,  // Bạn có thể thay đổi giá trị này theo yêu cầu
                     ThanhTien = Cart.Sum(p => p.ThanhTien),
-                    TrangThaiHoaDon = "Đã thanh toán", // Trạng thái thanh toán thành công
+                    TrangThaiHoaDon = "Đã thanh toán",
                     GhiChu = "Thanh toán qua PayPal"
                 };
+
+                // Thêm hóa đơn vào cơ sở dữ liệu
                 db.Add(hoaDon);
-                db.SaveChanges();
-                return Ok(response);
-			}
-			catch (Exception ex)
-			{
-				var error = new { ex.GetBaseException().Message };
-				return BadRequest(error);
-			}
-		}
+                await db.SaveChangesAsync();  // Lưu hóa đơn để lấy MaHoaDon
 
-		
+                // Tạo chi tiết hóa đơn
+                var cthd = new List<TChiTietHd>();
+                foreach (var item in Cart)
+                {
+                    cthd.Add(new TChiTietHd
+                    {
+                        MaHoaDon = hoaDon.MaHoaDon,  // Liên kết chi tiết hóa đơn với hóa đơn vừa tạo
+                        SoLuong = item.SoLuong,
+                        DonGia = item.DonGia,
+                        MaDoAn = item.MaDoAn
+                    });
+                }
 
-	}
+                // Thêm chi tiết hóa đơn vào cơ sở dữ liệu
+                db.AddRange(cthd);
+                await db.SaveChangesAsync();  // Lưu tất cả chi tiết hóa đơn vào CSDL
+
+                // Xóa giỏ hàng trong session sau khi thanh toán thành công
+                HttpContext.Session.Set<List<CartItem>>(MySetting.CART_KEY, new List<CartItem>());
+
+                // Trả về view Success sau khi thanh toán thành công
+                return View("Success");
+            }
+            catch (Exception ex)
+            {
+                // Log exception hoặc xử lý lỗi nếu cần thiết
+                var error = new { ex.GetBaseException().Message };
+                return BadRequest(error);
+            }
+        }
+
+
+
+
+    }
 }

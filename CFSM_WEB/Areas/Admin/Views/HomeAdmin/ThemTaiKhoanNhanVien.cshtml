@@ -6,40 +6,39 @@
 }
 
 <h2>@ViewData["Title"]</h2>
-
 <form method="post">
     <div class="form-group">
         <label for="UserName">Tên đăng nhập</label>
-        <input type="text" class="form-control" id="UserName" name="UserName" asp-for=="UserName" />
+        <input type="text" class="form-control" id="UserName" name="UserName" asp-for="UserName" />
         @Html.ValidationMessageFor(model => model.UserName)
     </div>
 
     <div class="form-group">
         <label for="Password">Mật khẩu</label>
-        <input type="password" class="form-control" id="Password" name="Password" asp-for= ="Password" />
+        <input type="password" class="form-control" id="Password" name="Password" asp-for="Password" />
         @Html.ValidationMessageFor(model => model.Password)
     </div>
     <div class="form-group">
         <label for="FullName">Họ tên</label>
-        <input type="text" class="form-control" id="FullName" name="FullName" asp-for= ="FullName" />
+        <input type="text" class="form-control" id="FullName" name="FullName" asp-for="FullName" />
         @Html.ValidationMessageFor(model => model.FullName)
     </div>
 
     <div class="form-group">
         <label for="Email">Email</label>
-        <input type="email" class="form-control" id="Email" name="Email" asp-for= ="Email" />
+        <input type="email" class="form-control" id="Email" name="Email" asp-for="Email" />
         @Html.ValidationMessageFor(model => model.Email)
     </div>
 
     <div class="form-group">
         <label for="Address">Địa chỉ</label>
-        <input type="text" class="form-control" id="Address" name="Address" asp-for= ="Address" "   />
+        <input type="text" class="form-control" id="Address" name="Address" asp-for="Address" "   />
         @Html.ValidationMessageFor(model => model.Address)
     </div>
 
     <div class="form-group">
         <label for="PhoneNumber">Số điện thoại</label>
-        <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" asp-for= ="PhoneNumber" />
+        <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" asp-for="PhoneNumber" />
         @Html.ValidationMessageFor(model => model.PhoneNumber)
     </div>
 

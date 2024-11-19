@@ -75,20 +75,13 @@
                     if (item.TrangThai == 1)
                     {
                         <td>Còn hoạt động</td>
+                        <td> <button class="btn btn-primary" onclick="window.location.href='@Url.Action("DungHoatDongNV", new { maNV = item.MaNhanVien })'">Dừng hoạt động</button></td>
                     }
                     else
                     {
                         <td>Dừng hoạt động</td>
-                    }
-                }
-                @{
-                    if (item.TrangThai == 1)
-                    {
-                        <td><a asp-action="DungHoatDongNV" asp-route-maNV="@item.MaNhanVien">Dừng hoạt động</a></td>
-                    }
-                    else
-                    {
-                        <td> </td>
+                        <td></td>
+                        
                     }
                 }
 

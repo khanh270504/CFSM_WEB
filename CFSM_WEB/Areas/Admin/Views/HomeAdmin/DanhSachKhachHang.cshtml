@@ -67,23 +67,21 @@
                         @{
                             if (item.TrangThai == 1)
                             {
+
                                 <td>Còn hoạt động</td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="window.location.href='@Url.Action("DungHoatDongKhach", new { maKhach = item.MaKhachHang })'">Dừng hoạt động</button>
+                                </td>
                             }
                             else
                             {
                                 <td>Dừng hoạt động</td>
+                                <td>
+                                    <button class="btn btn-primary" onclick="window.location.href='@Url.Action("MoHoatDongKhach", new { maKhach = item.MaKhachHang })'">Mở hoạt động</button>
+                                </td>
                             }
                         }
-                        @{
-                            if (item.TrangThai == 1)
-                            {
-                                <td><a asp-action="DungHoatDongKhach" asp-route-maKhach="@item.MaKhachHang">Dừng hoạt động</a></td>
-                            }
-                            else
-                            {
-                                <td><a asp-action="MoHoatDongKhach" asp-route-maKhach="@item.MaKhachHang">Mở hoạt động</a></td>
-                            }
-                        }
+                       
                     </tr>
                 }
 
