@@ -130,7 +130,7 @@ namespace CFSM_WEB.Controllers
                 }
             }
 
-            // Nếu ModelState không hợp lệ hoặc không phải POST request
+      
             return View(model);
         }
 

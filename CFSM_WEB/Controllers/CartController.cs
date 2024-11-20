@@ -82,7 +82,7 @@ namespace CFSM_WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Lấy customerId từ Claims và chuyển nó thành kiểu int
+                // Lấy customerId từ Claims
                 var customerId = int.Parse(HttpContext.User.Claims.SingleOrDefault(p => p.Type == MySetting.CLAIM_CUSTOMERID)?.Value);
                 var khachHang = new TKhachHang();
                 if (model.GiongKhachHang)
@@ -90,7 +90,7 @@ namespace CFSM_WEB.Controllers
                     khachHang = db.TKhachHangs.SingleOrDefault(p => p.MaKhachHang == customerId);
                 }
 
-                // Tạo đối tượng hóa đơn
+               
                 var hoaDon = new THoaDon
                 {   MaNhanVien = 1,
                     MaKhachHang = customerId,
@@ -110,14 +110,14 @@ namespace CFSM_WEB.Controllers
                 try
                 {
                     db.Add(hoaDon);
-                    db.SaveChanges(); // Lưu hóa đơn trước để lấy mã hóa đơn
+                    db.SaveChanges(); 
 
                     var cthd = new List<TChiTietHd>();
                     foreach (var item in Cart)
                     {
                         cthd.Add(new TChiTietHd
                         {
-                            MaHoaDon = hoaDon.MaHoaDon, // Liên kết chi tiết với mã hóa đơn vừa tạo
+                            MaHoaDon = hoaDon.MaHoaDon, 
                             SoLuong = item.SoLuong,
                             DonGia = item.DonGia,
                             MaDoAn = item.MaDoAn
@@ -125,11 +125,11 @@ namespace CFSM_WEB.Controllers
                     }
 
                     db.AddRange(cthd);
-                    db.SaveChanges(); // Lưu tất cả chi tiết hóa đơn vào CSDL cùng một lúc
+                    db.SaveChanges();
 
-                    db.Database.CommitTransaction(); // Commit giao dịch sau khi tất cả thay đổi được lưu thành công
+                    db.Database.CommitTransaction(); 
 
-                    HttpContext.Session.Set<List<CartItem>>(MySetting.CART_KEY, new List<CartItem>()); // Xóa giỏ hàng trong session
+                    HttpContext.Session.Set<List<CartItem>>(MySetting.CART_KEY, new List<CartItem>());
 
                     return View("Success");
                 }
@@ -137,9 +137,9 @@ namespace CFSM_WEB.Controllers
                 {
                     if (db.Database.CurrentTransaction != null)
                     {
-                        db.Database.RollbackTransaction(); // Rollback giao dịch nếu có lỗi
+                        db.Database.RollbackTransaction(); 
                     }
-                    // Log exception hoặc xử lý lỗi nếu cần thiết
+                    
                 }
             }
             return View(Cart);
@@ -164,7 +164,7 @@ namespace CFSM_WEB.Controllers
 			var tongTien = tongTienUsd.ToString("F2", CultureInfo.InvariantCulture);			
 			var donViTienTe = "USD";
 
-			// Mã đơn hàng tham chiếu
+			
 			var maDonHangThamChieu = "DH" + DateTime.Now.Ticks.ToString();
 
 			try
@@ -186,19 +186,19 @@ namespace CFSM_WEB.Controllers
         {
             try
             {
-                // Gọi API PayPal để capture đơn hàng
+               
                 var response = await _paypalClient.CaptureOrder(orderID);
 
                 if (response == null  || response.status != "COMPLETED")
                 {
-                    // Kiểm tra nếu PayPal trả về lỗi hoặc giao dịch không thành công
+                   
                     return BadRequest("Lỗi khi xử lý giao dịch PayPal.");
                 }
 
-                // Lấy ID khách hàng từ session
+              
                 var customerId = int.Parse(HttpContext.User.Claims.SingleOrDefault(p => p.Type == MySetting.CLAIM_CUSTOMERID)?.Value);
                 var khachHang = db.TKhachHangs.SingleOrDefault(p => p.MaKhachHang == customerId);
-                // Tạo hóa đơn
+               
                 var hoaDon = new THoaDon
                 {
                     MaKhachHang = customerId,
@@ -206,42 +206,40 @@ namespace CFSM_WEB.Controllers
                     DiaChi = khachHang.DiaChi,
                     NgayLap = DateTime.Now,
                     CachThanhToan = "PayPal",
-                    MaNhanVien = 1,  // Bạn có thể thay đổi giá trị này theo yêu cầu
+                    MaNhanVien = 1,  
                     ThanhTien = Cart.Sum(p => p.ThanhTien),
                     TrangThaiHoaDon = "Đã thanh toán",
                     GhiChu = "Thanh toán qua PayPal"
                 };
 
-                // Thêm hóa đơn vào cơ sở dữ liệu
+                
                 db.Add(hoaDon);
-                await db.SaveChangesAsync();  // Lưu hóa đơn để lấy MaHoaDon
+                await db.SaveChangesAsync();  
 
-                // Tạo chi tiết hóa đơn
+                
                 var cthd = new List<TChiTietHd>();
                 foreach (var item in Cart)
                 {
                     cthd.Add(new TChiTietHd
                     {
-                        MaHoaDon = hoaDon.MaHoaDon,  // Liên kết chi tiết hóa đơn với hóa đơn vừa tạo
+                        MaHoaDon = hoaDon.MaHoaDon,  
                         SoLuong = item.SoLuong,
                         DonGia = item.DonGia,
                         MaDoAn = item.MaDoAn
                     });
                 }
-
-                // Thêm chi tiết hóa đơn vào cơ sở dữ liệu
+               
                 db.AddRange(cthd);
-                await db.SaveChangesAsync();  // Lưu tất cả chi tiết hóa đơn vào CSDL
-
-                // Xóa giỏ hàng trong session sau khi thanh toán thành công
+                await db.SaveChangesAsync();  
+                
                 HttpContext.Session.Set<List<CartItem>>(MySetting.CART_KEY, new List<CartItem>());
 
-                // Trả về view Success sau khi thanh toán thành công
+         
                 return View("Success");
             }
             catch (Exception ex)
             {
-                // Log exception hoặc xử lý lỗi nếu cần thiết
+                
                 var error = new { ex.GetBaseException().Message };
                 return BadRequest(error);
             }
