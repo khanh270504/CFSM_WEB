@@ -1,24 +1,22 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "IndexHome";
     Layout = "~/Views/Shared/_LayoutIndexCaPhe.cshtml";
-
 }
 
 @using X.PagedList.Mvc.Core;
 @model X.PagedList.IPagedList<TDoAn>
+
 <section class="home-slider owl-carousel">
 		<div class="slider-item" style="background-image: url(../LayoutIndexCaPhe/images/kongfuong1.jpg);">
 			<div class="overlay"></div>
 			<div class="container">
 				<div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
 					<div class="col-md-8 col-sm-12 text-center ftco-animate">
 						<span class="subheading">Welcome</span>
 						<h1 class="mb-4">TRẢI NGHIỆM CÀ PHÊ NGON NHẤT THẾ GIỚI</h1>
 						<p class="mb-4 mb-md-5">Những người chỉ trích Kong Fuong không biết gì về cà phê và gà rán.</p>
-					<p><a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Đặt ngay</a> <a asp-action="Menu" asp-controller="Home" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Menu</a></p>
+						<p><a asp-action="Index" asp-controller="Cart" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Đặt ngay</a> <a asp-action="Menu" asp-controller="Home" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">Menu</a></p>
 					</div>
-
 				</div>
 			</div>
 		</div>
