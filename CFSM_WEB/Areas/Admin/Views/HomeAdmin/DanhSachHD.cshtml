@@ -8,8 +8,13 @@
 }
 
 <h1>Danh sách hóa đơn</h1>
-
-<table class="table">
+@if (Model == null || !Model.Any())
+    {
+    <p>Không có Hóa đơn nào để hiển thị.</p>
+}
+else
+{
+    <table class="table">
     <thead>
         <tr>
             <th>Ngày đặt</th>            
@@ -59,3 +64,5 @@
     {"page-link"}
 
 })
+</div>
+}
